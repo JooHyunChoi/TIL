@@ -1,0 +1,25 @@
+﻿GoodBadDdodwHi_bot
+991657167:AAGUwPA3tdQCar1p9Lql0fX4M5fVMyMyCk8
+
+요청 URL
+https://api.telegram.org/bot<token>/METHOD_NAME
+
+합치기
+https://api.telegram.org/bot991657167:AAGUwPA3tdQCar1p9Lql0fX4M5fVMyMyCk8/METHOD_NAME
+https://api.telegram.org/bot991657167:AAGUwPA3tdQCar1p9Lql0fX4M5fVMyMyCk8/METHOD_NAME
+
+chat_id
+936209880
+
+
+
+메소드 
+https://core.telegram.org/bots/api#available-methods
+getMe
+getUpdates
+
+엔그록
+https://badf9931.ngrok.io -> http://localhost:5000
+
+엔그록 세팅
+https://api.telegram.org/bot991657167:AAGUwPA3tdQCar1p9Lql0fX4M5fVMyMyCk8/setWebhook?url=https://badf9931.ngrok.io/991657167:AAGUwPA3tdQCar1p9Lql0fX4M5fVMyMyCk8
