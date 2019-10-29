@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- title is here-->
+  <title>
+  {% block title %}{% endblock %}
+  </title>
+  <!-- css is here -->
+  {% block css %}{% endblock %}
+</head>
+<body>
+<h1>base.html 템플릿을 상속 받았습니다. </h1>
+  {% block body %}
+  {% endblock %}
+</body>
+</html>

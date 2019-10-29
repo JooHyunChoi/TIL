@@ -110,7 +110,7 @@ def palindrome(request , text):
     return render(request , 'palindrome.html' , context)
 ''' 실습 3
 로또 번호 추첨(리스트 + a 활용)
-임으로 출력한 로또 번호와 가장 최근에 추첨한 로또 번호 비교해서 당첨여부 확인'''
+임의로 출력한 로또 번호와 가장 최근에 추첨한 로또 번호 비교해서 당첨여부 확인'''
 def lotto(request , nums):
     lottoNums = list(map(int , nums.split(',')))
     winningNums = [18, 34, 39, 43, 44, 45]

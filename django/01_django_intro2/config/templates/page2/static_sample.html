@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+<!-- 장고에서 제공하는 static을 사용하겠다. -->
+{% block title%}
+<h1>다현입니다.</h1>
+{% endblock %}
+
+{% block body%}
+<img src="{% static 'images/dahyun.jpg' %}" alt="">
+<h1>다현입니다.</h1>
+{% endblock %}
