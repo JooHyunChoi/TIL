@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<h1 class="text-center">DETAIL</h1>
+<!--
+    article.immage.url -> 파일 주소
+    article.image -> 파일 이름(sample.png)
+  -->
+<hr>
+{% if article.image %}
+<img src="{{ article.image.url }}" alt="{{ article.image }}" class="mx-auto"
+ width="330" height="500" style="display : block;">
+{% else %}
+<p> 사진이 없어요 ...</p>
+<img src="{% static "images/no_image.png" %}" alt="no image">
+{% endif %}
+<hr>
+
+<div class="container">
+  <div class="row">
+    <div class="ml-auto">
+      <p>생성 시간 : {{article.created_at}}</p>
+      <p>수정 시간 : {{article.updated_at}}</p>
+    </div>
+  </div>
+</div>
+
+<p>글 제목 : {{article.title}}</p>
+<p>글 내용 : {{article.content}}</p>
+<hr>
+
+<a class="btn btn-dark" href="{% url 'articles:index' %}">INDEX</a>
+<a class="btn btn-dark" href="{% url 'articles:update' article.pk %}">EDIT</a>
+
+<form action="{% url 'articles:delete' article.pk%}" method="POST" style="display : inline;"
+  onclick="return confirm('진짜 삭제할까요...?')">
+  {% csrf_token %}
+  <input class="btn btn-dark" type="submit" value="DELETE">
+</form>
+
+<hr>
+
+<!-- 댓글 작성 Form -->
+<form action="{% url 'articles:comments_create' article.pk%}" method="POST">
+  {% csrf_token %}
+  <div class="container">
+    <div class="row">
+      <input type="text" name="comment">
+      <input class="ml-2 btn btn-white border border-dark" type="submit" value="댓글 작성">
+    </div>
+  </div>
+</form>
+<hr>
+
+<div class="container">
+  {{comments|length}} 개의 댓글이 있습니다.
+  {% comment %}
+  {{article.comment_set.all|length}} 개의 댓글이 있습니다.
+  {{comments.count}} 개의 댓글이 있습니다.
+  {% endcomment %}
+  <ul class="list-group">
+    {% for comment in comments %}
+    <li class="list-group-item ">
+      <div class="mr-auto" style="display : inline;">
+        {{comment.content}}
+      </div>
+
+      <!-- 댓글 삭제 Form -->
+      <form action="{% url 'articles:comments_delete' article.pk comment.pk %}" method="POST" style="display : inline;"
+        onclick="return confirm('진짜 삭제할까요...?')">
+        {% csrf_token %}
+        <input class="mr-auto btn btn-dark right-box" type="submit" value="DELETE">
+      </form>
+    </li>
+    <!-- for 문 QuerySet이 텅텅 비어 있을 때-->
+    {% empty %}
+
+    {% endfor %}
+  </ul>
+
+</div>
+
+
+{% endblock  %}

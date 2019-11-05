@@ -1,0 +1,27 @@
+  
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1 class="text-center">NEW</h1>
+  <!--
+    enctype
+    1. application/x-www-form-urlencoded : 기본값.. 모든 문자열 인코딩.
+    2. multipart/form-data : 차일 형태 첨부 시 필수 사용 / 데이터를 나누어서 전송된다.
+     파일과 텍스트가 따로 전송이 된다.
+     그래서 file데이터 들은 post나 get으로 받는게 아니고 FILES로 get해서 찾는다.
+  -->
+  <form action="{% url 'articles:create' %}", method="POST" enctype = "multipart/form-data">
+  {% csrf_token %}
+    <label for="title">TITLE </label>
+    <input type="text" id="title" name="title" > <br>
+    <label for="content">CONTENT </label>
+    <textarea type="text" id="content" name="content" cols="30" rows="10"> </textarea> <br>
+    <label for="image">IMAGE</label>
+    <input type="file" name = "image" id = "image" accept = "image/*">
+    <input type="submit">
+  </form>
+
+  <hr>
+  <a href="{% url 'articles:index' %}">[BACK]</a>
+
+{% endblock  %}

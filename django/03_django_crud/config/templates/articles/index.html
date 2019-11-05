@@ -1,0 +1,22 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+  <h1 class="text-center">Articles</h1>
+  <img src="{% static "images/IU0001.jpg" %}" alt="iu" width = "330" height= "500">
+  <hr>
+    <a href="{% url 'articles:create' %}">[NEW]</a>
+  <hr>
+
+  {% for article in articles %}
+    <p>[{{article.pk}}] : {{article.title}}</p>
+    {% comment %} <a href="/articles/{{article.pk}}">[DETAIL]</a> {% endcomment %}
+    <a href="{% url 'articles:detail' article.pk %}">[DETAIL]</a>
+
+  <hr>
+  
+  {% endfor %}
+  <hr>
+
+{% endblock  %}
