@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1 class = 'text-center'>Movies.</h1>
+<hr>
+<a href="/movies/new/">[NEW]</a>
+<h1>하이 헬로 안녕</h1>
+<hr>
+{% for m in movie %}
+  <p>글 번호 : {{m.pk}}</p>
+  <p>글 제목 : {{m.title}}</p>
+  <a href="/movies/{{m.pk}}">[DETAIL]</a>
+
+
+{% endfor %}
+{% endblock body %}

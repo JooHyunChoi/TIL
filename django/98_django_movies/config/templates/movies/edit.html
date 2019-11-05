@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1 class = "text-center"> NEW</h1>
+  <form action="/movies/{{ movie.pk }}/update/" method = "POST">
+  {% csrf_token %}
+    title : <input type="text" name = "title" value = {{movie.title}}><br>
+    title_en : <input type="text" name = "title_en" value = {{movie.title_en}}><br>
+    audience : <input type="number" name="audience" id="audience" value = {{movie.audience}}><br>
+    open_date : <input type="date" name="open_date" value = {{movie.open_date}} ><br>
+    genre : <input type="text" name = "genre" value = {{movie.genre}}><br>
+    watch_grade : <input type="text" name = "watch_grade" value = {{movie.watch_grade}}><br>
+    score : <input type="number" name="score" id="score" step = "0.01" value = {{movie.score}}><br>
+    poster_url : <input type="text" name = "poster_url" value = {{movie.poster_url}}><br>
+    discription : <textarea name="discription" id="" cols="30" rows="10" > {{movie.discription}}</textarea><br>
+    <input type="submit">
+  
+  
+  </form>
+  <hr>
+  <a href="/movies/index">[BACK]</a>
+{% endblock body %}
+

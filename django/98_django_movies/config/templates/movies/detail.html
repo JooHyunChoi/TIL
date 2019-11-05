@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+  <h1 class = "text-center"> DETAIL </h1>
+  <p>영화 번호 : {{movie.pk}}</p>
+  <p>영화 제목 : {{movie.title}}</p>
+  <p>영화 영어 제목 : {{movie.title_en}}</p>
+  <p>영화 관객수 : {{movie.audience}}</p>
+  <p>영화 오픈 날짜 : {{movie.open_date}}</p>
+  <p>영화 장르 : {{movie.genre}}</p>
+  <p>영화 관람등급 : {{movie.watch_grade}}</p>
+  <p>영화 평점 : {{movie.score}}</p>
+  <img src="{% static 'images/one.jpg' %}" alt="">
+  <img src="{{movie.poster_url}}" alt="" width = "330" height= "500">
+  <p>영화 소개 : {{movie.discription}}</p>
+  <a href="/movies/{{movie.pk}}/edit/">[EDIT]</a>
+  <a href="/movies/">[BACK]</a>
+{% endblock body %}
+
