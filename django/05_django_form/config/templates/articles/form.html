@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% comment %} 
+RESTFul 하게 로직을 통합했기 때문에 
+form 에서 action을 비워두어도 자동으로 현재 경로의 POST 로 수행한다.
+action 값이 공백일 경우, 현재 위치하고 있는 주소로 요청을 보낸다. 
+폼을 던져주는 경로, DB에 저장하는 경로가 동일한 경로라면 공백으로 해도 정상적으로 작동한다. 
+ {% endcomment %}
+
+{% load bootstrap4 %}
+{% block body %}
+
+
+{% if request.resolver_match.url_name == "create" %}
+  <h1> Create </h1>
+{% else %} 
+  <h1> Update </h1>
+{% endif %}
+ 
+
+
+
+
+<form action="" method="POST">
+  {% csrf_token %}
+  {% comment %} 
+  {{form.as_p}}: 각각의 input 태그를 p 태그로 감싼다.
+  {{form.as_table}}: 각각의 input 태그를 테이블 태그로 감싼다.
+  {% endcomment %}
+  {% comment %} {{form.as_p}} {% endcomment %}
+  {% bootstrap_form form layout="inline" %}
+  <input type="submit" value="작성"> <br>
+</form>
+{% comment %} 
+같은 Template을 공유하지만, 아래의 상황에 맞게 변해야 한다.
+1.  create -> index
+    update -> detail 
+2.  <h1>CREATE</h1>
+    <h1>UPDATE</h1>
+
+ {% endcomment %}
+<a href="{% url 'articles:index' %}">[BACK]</a>
+
+{% endblock  %}

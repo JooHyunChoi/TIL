@@ -8,8 +8,7 @@
   -->
 <hr>
 {% if article.image %}
-<img src="{{ article.image.url }}" alt="{{ article.image }}" class="mx-auto"
- width="330" height="500" style="display : block;">
+<img src="{{ article.image.url }}" alt="{{ article.image }}" class="mx-auto" style="display : block;">
 {% else %}
 <p> 사진이 없어요 ...</p>
 <img src="{% static "images/no_image.png" %}" alt="no image">
