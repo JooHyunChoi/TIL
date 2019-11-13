@@ -1,5 +1,4 @@
 {% load bootstrap4 %}
-{% load gravatar %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,27 +12,13 @@
   
 </head>
 <body>
-
-  {% if user.is_authenticated %}
-    <h1>
-      <img src="https://s.gravatar.com/avatar/{{ user.email|makemd5 }}?s=80&d=mp" alt="">
-    </h1>
-     <h2>어서와~~{{ user.username }}</h2>
-    <a href="{% url 'accounts:logout' %}"> 로그아웃 </a>
-    <a href="{% url 'accounts:update' %}">정보 수정</a>
-    <a href="{% url 'accounts:change_password' %}">비밀번호 변경</a>
-    <form action="{% url 'accounts:delete' %}" method = "POST">
-      {% csrf_token %}
-      <input type="submit" value = "회원탈퇴">
-    </form>
-  {% else %}
-    <h3> 로그인 하세용 </h3>
-    <a href="{% url 'accounts:login' %}"> 로그인 </a>
-    <a href="{% url 'accounts:signup' %}"> 회원가입 </a>
-  {% endif %}
+  {% include 'articles/_nav.html' %}
+  <div class="container">
+    {% block body %}
+    {% endblock body %}
+  </div>
   
   {% bootstrap_javascript jquery='full' %}
-  {% block body %}
-  {% endblock  %}
+  
 </body>
 </html>

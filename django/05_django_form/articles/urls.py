@@ -12,4 +12,7 @@ urlpatterns = [
     path('<int:article_pk>/delete',views.delete, name="delete"),
     path('<int:article_pk>/update',views.update, name="update"),
     path('<int:article_pk>/like' , views.like , name = 'like'),
+    path('<int:article_pk>/follow/<int:user_pk>' , views.follow , name = 'follow'),
+    path('list/' , views.list , name='list'),
+    path('explore/' , views.explore , name='explore'),
 ]

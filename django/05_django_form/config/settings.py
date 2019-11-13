@@ -144,3 +144,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # LOGIN_URL = '/member/login'
 #원래는
 # LOGIN_URL = '/Accounts/login'
+
+#아무 설정 안하면 auth.User
+AUTH_USER_MODEL = 'accounts.USER'

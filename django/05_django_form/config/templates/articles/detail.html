@@ -1,12 +1,14 @@
-
+{% extends 'base.html'%}
 
 {% block body %}
+{% include "articles/_follow.html" %}
 
 <p>제목  :  {{article.title}}</p>
 <p>내용  :  {{article.content}}</p>
 <p>최초 업로드 날짜  :  {{article.created_at}}</p>
 <p>최종 수정 날짜  :  {{article.updated_at}}</p>
-
+<hr>
+<hr>
 <a href="{% url 'articles:index' %}">[INDEX]</a>
 <a href="{% url 'articles:update' article.pk %}">[EDIT]</a>
 <form action="{% url 'articles:delete' article.pk %}" method="POST">

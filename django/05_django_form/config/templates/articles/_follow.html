@@ -1,0 +1,23 @@
+<div class="jumbotron">
+  <h1 class="display-4">{{ person.username }}</h1>
+  <p class="lead"> 팔로워 : {{ person.followers.all|length }}  | 
+    팔로잉: {{person.followings.all|length }} </p>
+  <hr class="my-4">
+  {% if user != article.user %}
+    {% for follower in person.followers.all %}
+      <p>{{ follower.username }}</p>
+      {% empty %}
+        <p> 빨로워가 없어요. </p>
+    {% endfor %}
+    
+    <a class="btn btn-primary btn-lg" href="{% url 'articles:follow' article.pk person.pk %}" role="button">
+    {% if request.user in person.followers.all %}
+      언빨로우
+    {% else %}
+      빨로우
+    {% endif %}
+    </a>
+  {% endif %}
+
+  
+</div>

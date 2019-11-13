@@ -1,10 +1,12 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404 
 from .models import Article , Comment
 from .forms import ArticleForm,CommentForm
 from IPython import embed
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 import hashlib
+from django.contrib.auth import get_user_model
+from itertools import chain
 
 
 # Create your views here.
@@ -59,10 +61,12 @@ def detail(request, article_pk):
                                 # Class    / PK 값
     article = get_object_or_404(Article, pk=article_pk)
     #comments = article.comment_set.all()
+    person = get_object_or_404(get_user_model() , pk=article.user_id )
     comment_form = CommentForm()
     comments = article.comment_set.all()
     context = {
         'comment_form' : comment_form,
+        'person' : person,
         'comments' : comments,
         'article' : article,
         #'comments' : comments,
@@ -146,3 +150,55 @@ def like(request ,article_pk):
     else:
         article.like_users.add(user)
     return redirect('articles:index')
+
+@login_required
+def follow(request,article_pk,user_pk):
+    #게시글 작성한 유저
+    person = get_object_or_404(get_user_model(),pk=user_pk)
+
+    #지금 접속하고 있는 유저
+    user = request.user
+    #게시글 작성 유저 팔로워 명단에 접속 중인 유저가 있을 경우
+    # -> unfollow
+    
+    #if user in article.like_users.all():
+    #    article.like_users.remove(user)
+    #else: 
+    #    article.like_users.add(user)
+    ######################################################
+    if person != user:
+        if user in person.followers.all():
+            person.followers.remove(user)
+        else:
+            person.followers.add(user)
+        # 명단에 없으면 -> follow
+
+    return redirect('articles:detail' ,article_pk)
+
+
+''' 내가 팔로우 하는 사람의 글 + 내가 작성한 글  '''
+@login_required
+def list(request):
+    #내가 팔로우 하고 있는 사람들
+    followings = request.user.followings.all()
+    #내가 팔로우 하고 있는 사람들 + 나 -> 합치기
+    followings = chain(followings , [request.user])
+    #위 명단 사람들 게시글 가지고 오기
+    articles = Article.objects.filter(user__in = followings).order_by('-pk').all()
+    comment_form = CommentForm()
+    context = {
+        'comment_form' :comment_form,
+        'articles' : articles
+    }
+    return render(request , 'articles/article_list.html' , context)
+
+
+''' 모든 사람 글 '''
+def explore(request):
+    articles =Article.objects.all()
+    comment_form = CommentForm()
+    context = {
+        'comment_form' :comment_form,
+        'articles' : articles
+    }
+    return render(request , 'articles/article_list.html' , context)
