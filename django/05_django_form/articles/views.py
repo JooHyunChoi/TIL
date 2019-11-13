@@ -33,7 +33,9 @@ def create(request):
         # embed()
         # 유효성 검증
         if form.is_valid():
-            article = form.save()
+            article = form.save(commit=False)
+            article.user = request.user
+            article.save()
             # 유효성 검증이 끝난 form은 dict 형태로 뽑혀 나온다.
             # cleaned_data 를 통해 dict 안의 데이터를 검증한다.
             # title = form.cleaned_data.get('title')
@@ -128,3 +130,19 @@ def comments_delete(request, article_pk, comment_pk):
         comment = Comment.objects.get(pk=comment_pk)
         comment.delete()
     return redirect('articles:detail', article.pk)
+
+
+@login_required
+def like(request ,article_pk):
+    ''' 좋아요 누를 게시글 가지고 오기 '''
+    article = get_object_or_404(Article,pk = article_pk)
+    user = request.user
+    #현재 접속하고 있는 유저
+
+    # 현재 게시글을 좋아요 누른 사람 목록에 현재 접속한 유저가 있을 경우 - > 취소기능
+    if article.like_users.filter(pk = user.pk).exists():
+        article.like_users.remove(user)
+    #목록에 없을 경우 -> 좋아요 누르기
+    else:
+        article.like_users.add(user)
+    return redirect('articles:index')

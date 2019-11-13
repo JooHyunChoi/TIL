@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-12 col-md-6 mb-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{article.title}}</h5>
+        <p class="card-text">
+          <!-- 사용자가 좋아요를 눌렀을때와 안눌렀을때 -->
+          <a href="{% url 'articles:like' article.pk %}">
+          <!-- python list in -->
+            {% if  request.user in article.like_users.all %}
+              <i class="fas fa-heart"></i>
+            {% else %}
+              <i class="far fa-heart"></i>
+            {% endif %}
+          </a>
+        {{ article.like_users.all|length }}명이 좋아합니다.</p>
+        <a href="{% url 'articles:detail' article.pk %}" class="btn btn-primary">[MORE]</a>
+      </div>
+    </div>
+  </div>
+</div>

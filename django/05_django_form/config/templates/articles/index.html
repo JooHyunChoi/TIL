@@ -5,8 +5,9 @@
   <a href="{% url 'articles:create' %}">[NEW]</a>
   <hr>
   {% for article in articles %}
-  <p>[{{article.title}}]  {{article.content}} </p>
-  <a href="{% url 'articles:detail' article.pk %}">[MORE]</a>
+  
+  <!-- 모듈화 시켜둔 articles쳄플릿 가지고 오기 -->
+  {% include 'articles/_article.html' %}
   {% endfor %}
 
 
