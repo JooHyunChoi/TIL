@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404 
-from .models import Article , Comment
+from .models import Article , Comment , Hashtag
 from .forms import ArticleForm,CommentForm
 from IPython import embed
 from django.views.decorators.http import require_POST
@@ -43,6 +43,16 @@ def create(request):
             # title = form.cleaned_data.get('title')
             # content = form.cleaned_data.get('content')
             # article = Article.objects.create(title=title, content=content)
+
+            #hashtag
+            #게시글 내용을 split해서 리시트로 만듬
+            for word in article.content.split():
+                # word가 #으로 시작할 경우 해시태그 등록
+                if word.startswith('#'):
+                    hashtag,created = Hashtag.objects.get_or_create(content=word)
+                    article.hashtags.add(hashtag)
+
+
 
             return redirect('articles:detail', article.pk)
     
@@ -89,6 +99,13 @@ def update(request, article_pk):
 
         if form.is_valid():
             article = form.save()
+            ''' 해쉬태그 다 삭제하고 다시 등록하자 '''
+            article.hashtags.clear()
+            for word in article.content.split():
+                if word.startswith('#'):
+                    hashtag,created = Hashtag.objects.get_or_create(content=word)
+                    article.hashtags.add(hashtag)
+
             return redirect('articles:detail', article_pk)
 
     else :
@@ -202,3 +219,13 @@ def explore(request):
         'articles' : articles
     }
     return render(request , 'articles/article_list.html' , context)
+
+#해쉬태그 글 모아보기
+def hashtag(request , hash_pk):
+    hashtag = get_object_or_404(Hashtag,pk=hash_pk)
+    articles = hashtag.article_set.order_by('-pk')
+    context = {
+        'hashtag' : hashtag,
+        'articles' : articles,
+    }
+    return render(request , 'articles/hashtag.html' ,context)
